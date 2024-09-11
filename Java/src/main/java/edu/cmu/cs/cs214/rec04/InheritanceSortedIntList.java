@@ -42,6 +42,26 @@ public class InheritanceSortedIntList extends SortedIntList {
     }
 
     /**
+     * Adds all of the elements of the IntegerList to the list.
+     * Calls add() on each element of list. Can be overwritten
+     * for more specific behavior.
+     *
+     * @param list IntegerList containing elements to be added to the list
+     * @return true if the list changed as a result of the call
+     */
+    @Override
+    public boolean addAll(IntegerList list){
+        boolean success = false;
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            success |= this.add(list.get(i));
+        }
+
+        return success;
+    }
+
+    /**
      * Adds the specified int to the list.
      *
      * @return true if the list is changed as a result of the call

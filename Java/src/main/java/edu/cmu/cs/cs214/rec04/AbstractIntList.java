@@ -1,5 +1,8 @@
 package edu.cmu.cs.cs214.rec04;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * AbstractIntList -- a list of integers.
  *
@@ -8,6 +11,8 @@ package edu.cmu.cs.cs214.rec04;
  */
 public abstract class AbstractIntList implements IntegerList {
 
+    protected int listSize = 0;
+    protected List<Integer> myList = new ArrayList<>();
     /**
      * Adds the specified int to the list.
      *
@@ -24,17 +29,7 @@ public abstract class AbstractIntList implements IntegerList {
      * @param list IntegerList containing elements to be added to the list
      * @return true if the list changed as a result of the call
      */
-    public boolean addAll(IntegerList list) {
-
-        boolean success = false;
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            success |= this.add(list.get(i));
-        }
-
-        return success;
-    }
+    public abstract boolean addAll(IntegerList list);
 
     /**
      * Returns the integer at the specified position in this list.
@@ -42,7 +37,14 @@ public abstract class AbstractIntList implements IntegerList {
      * @param index index of the element to return
      * @return the element at the specified position in this list
      */
-    public abstract int get(int index);
+    @Override
+    public int get(int index){
+        if (index < 0 || index >= listSize){
+            System.out.println("This is out of bound");
+            return -1;
+        }
+        return myList.get(index);
+    }
 
     /**
      * Removes the first occurrence of the specified element from the list,
@@ -51,7 +53,19 @@ public abstract class AbstractIntList implements IntegerList {
      * @param num an integer to be removed from the list, if present
      * @return true if an element was removed as a result of this call
      */
-    public abstract boolean remove(int num);
+    @Override
+    public boolean remove(int num){
+        boolean removed = false;
+        for (int i = 0; i < this.listSize; i++){
+            if (myList.get(i) == num){
+                myList.remove(i);
+                removed = true;
+                this.listSize--;
+                break;
+            }
+        }
+        return removed;
+    }
 
     /**
      * Removes from the list all of its elements that are contained in the
@@ -61,7 +75,12 @@ public abstract class AbstractIntList implements IntegerList {
      * the list
      * @return true if the list changed as a result of the call
      */
-    public abstract boolean removeAll(IntegerList list);
+    @Override
+    public boolean removeAll(IntegerList list){
+        this.listSize = 0;
+        myList = new ArrayList<>();
+        return true;
+    }
 
     /**
      * Returns the number of elements in this list. If this list contains
@@ -69,6 +88,9 @@ public abstract class AbstractIntList implements IntegerList {
      *
      * @return number of elements in the list
      */
-    public abstract int size();
+    @Override
+    public int size(){
+        return this.listSize;
+    }
 
 }

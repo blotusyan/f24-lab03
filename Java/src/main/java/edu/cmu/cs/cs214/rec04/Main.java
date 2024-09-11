@@ -17,10 +17,10 @@ public class Main {
          * */
 
         InheritanceSortedIntList list1;
-        // InheritanceSortedIntList list2;
+        InheritanceSortedIntList list2;
 
         list1 = new InheritanceSortedIntList();
-        // list2 = new InheritanceSortedIntList();
+        list2 = new InheritanceSortedIntList();
 
         // add 5 elements to our first list.
         list1.add(1);
@@ -37,11 +37,11 @@ public class Main {
         // list2.add(0);
 
 
-        // // add the first list (5 elements) to our second list (2 elements).
-        // list2.addAll(list1);
+        // add the first list (5 elements) to our second list (2 elements).
+        list2.addAll(list1);
 
-        // printList(list2);
-        // System.out.println(list2.getTotalAdded());
+        printList(list2);
+        System.out.println(list2.getTotalAdded());
     }
 
     /**
