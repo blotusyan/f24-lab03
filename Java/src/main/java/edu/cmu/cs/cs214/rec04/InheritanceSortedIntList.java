@@ -22,23 +22,9 @@ public class InheritanceSortedIntList extends SortedIntList {
      * @param num an integer to be added to the list
      * @return true if the list is changed as a result of the call
      */
-    @Override
     public boolean add(int num){
-        Boolean added = false;
-        for (int i = 0; i < this.myList.size(); i++){
-            if (num <= myList.get(i)){
-                myList.add(i, num);
-                added = true;
-                break;
-            }
-        }
-        if (!added){
-            myList.add(num);
-            added = true;
-        }
-        this.listSize++;
         this.totalAdded++;
-        return added;
+        return super.add(num);
     }
 
     /**

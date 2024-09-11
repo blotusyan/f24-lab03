@@ -1,8 +1,5 @@
 package edu.cmu.cs.cs214.rec04;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.Integer;
 /**
  * InheritanceSortedIntList -- a variant of a SortedIntList that keeps
  * count of the number of attempted element insertions (not to be confused
@@ -13,7 +10,7 @@ import java.lang.Integer;
  *
  */
 
-public abstract class SortedIntList extends AbstractIntList {
+public class SortedIntList extends AbstractIntList {
 
     // Write your implementation below with API documentation
     /**
@@ -22,7 +19,23 @@ public abstract class SortedIntList extends AbstractIntList {
      * @param num an integer to be added to the list
      * @return true if the list is changed as a result of the call
      */
-    public abstract boolean add(int num);
+    @Override
+    public boolean add(int num){
+        Boolean added = false;
+        for (int i = 0; i < this.myList.size(); i++){
+            if (num <= myList.get(i)){
+                myList.add(i, num);
+                added = true;
+                break;
+            }
+        }
+        if (!added){
+            myList.add(num);
+            added = true;
+        }
+        this.listSize++;
+        return added;
+    }
 
 
     /**
@@ -33,7 +46,17 @@ public abstract class SortedIntList extends AbstractIntList {
      * @param list IntegerList containing elements to be added to the list
      * @return true if the list changed as a result of the call
      */
-    public abstract boolean addAll(IntegerList list);
+    @Override
+    public boolean addAll(IntegerList list){
+        boolean success = false;
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            success |= this.add(list.get(i));
+        }
+
+        return success;
+    }
 
 
 
