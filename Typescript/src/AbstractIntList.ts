@@ -7,6 +7,8 @@ import { IntegerList } from './IntegerList.js'
  *
  */
 abstract class AbstractIntList implements IntegerList {
+   protected listSize: number = 0;
+   protected myList: number[] = [];
   /**
      * Adds the specified int to the list.
      *
@@ -23,15 +25,7 @@ abstract class AbstractIntList implements IntegerList {
      * @param list IntegerList containing elements to be added to the list
      * @return true if the list changed as a result of the call
      */
-  public addAll (list: IntegerList): boolean {
-    let success = false
-
-    for (let i = 0; i < list.size(); i++) {
-      success ||= this.add(list.get(i))
-    }
-
-    return success
-  }
+  abstract addAll (list: IntegerList): boolean
 
   /**
      * Returns the integer at the specified position in this list.
@@ -39,7 +33,13 @@ abstract class AbstractIntList implements IntegerList {
      * @param index index of the element to return
      * @return the element at the specified position in this list
      */
-  abstract get (index: number): number
+  public get(index: number): number {
+      if (index < 0 || index >= this.listSize) {
+         console.log("This is out of bound");
+         return -1;
+      }
+      return this.myList[index];
+   }
 
   /**
      * Removes the first occurrence of the specified element from the list,
@@ -48,7 +48,18 @@ abstract class AbstractIntList implements IntegerList {
      * @param num an integer to be removed from the list, if present
      * @return true if an element was removed as a result of this call
      */
-  abstract remove (num: number): boolean
+  public remove(num: number): boolean {
+      let removed = false;
+      for (let i = 0; i < this.listSize; i++) {
+         if (this.myList[i] === num) {
+            this.myList.splice(i, 1); // Remove element
+            removed = true;
+            this.listSize--;
+            break;
+         }
+      }
+      return removed;
+   }
 
   /**
      * Removes from the list all of its elements that are contained in the
@@ -58,7 +69,11 @@ abstract class AbstractIntList implements IntegerList {
      * the list
      * @return true if the list changed as a result of the call
      */
-  abstract removeAll (list: IntegerList): boolean
+  public removeAll(list: IntegerList): boolean {
+      this.listSize = 0;
+      this.myList = [];
+      return true;
+   }
 
   /**
      * Returns the number of elements in this list. If this list contains
@@ -66,7 +81,9 @@ abstract class AbstractIntList implements IntegerList {
      *
      * @return number of elements in the list
      */
-  abstract size (): number
+  public size(): number {
+      return this.listSize;
+   }
 }
 
 export { AbstractIntList }
